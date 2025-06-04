@@ -1,21 +1,17 @@
-package finch;
+package p3Seb;
 
 public class Main {
 	public static void main(String[] args) {
 		String up = "f";
 		int[] led = {0,0,0,0,0,1,1,1,1,1,0,0,1,0,0,1,1,1,1,1,0,0,0,0,0};
 		Finch bird = new Finch();
-		bird.setDisplay(led);
-		while(!(up.equals("f"))) {
-			System.out.print("Distance to obstacle: " + bird.getDistance());
-			bird.setMove("F",999,50);
-			if((bird.isShaking()) == true) {
-				bird.pause(1.5);
-				bird.getSound();
-			}else {
-				bird.setMove("F", 10, 100);
-			}
-		}		
+		bird.setDisplay(led);	
+		while(bird.isShaking() == false) {
+			System.out.println("Compass Heading: " + bird.getCompass());
+			bird.setMove("F", 999, 50);
+			bird.pause(10);
+			if(bird.distance)
+		}
 	}
 	public void setDisplay(int[] led, int set, int value) {
 		int count = 0;
@@ -28,3 +24,13 @@ public class Main {
 		}
 	}
 }
+/*while(!(up.equals("f"))) {
+System.out.print("Distance to obstacle: " + bird.getDistance());
+bird.setMove("F",999,50);
+if((bird.isShaking()) == true) {
+	bird.pause(1.5);
+	bird.getSound();
+}else {
+	bird.setMove("F", 10, 100);
+}
+}*/	
