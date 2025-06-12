@@ -15,8 +15,12 @@ public class Main {
         bird.setDisplay(led);
         while (!bird.isShaking()) {
             System.out.println("Compass Heading: " + bird.getCompass());
+	    System.out.println("Distance from object" + bird.getDistance());
             bird.setMove("F", 999, 50);
             bird.pause(10);
+	    if((bird.getDistance()) > 10){
+		bird.stop();
+	    }
         }
         
         bird.setDisplay(new int[25]);
