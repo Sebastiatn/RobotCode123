@@ -1,44 +1,51 @@
-package p3Seb;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Finch bird = new Finch();
-        int[] led = new int[25];
-        System.out.print("Enter an led position to turn on (1 to 25) and it must me either a 1 or a 0: ");
-        int userInput = scanner.nextInt();
-        if (userInput < 1 || userInput > 25) {
-            System.out.println("Invalid input. Please enter a number from 1 to 25.");
-            return;
-        }
-        setDisplay(led, userInput, 1);
-        bird.setDisplay(led);
-        while (!bird.isShaking()) {
-            System.out.println("Compass Heading: " + bird.getCompass());
-	    System.out.println("Distance from object" + bird.getDistance());
-            bird.setMove("F", 999, 50);
-            bird.pause(10);
-	    if((bird.getDistance()) > 10){
-		bird.stop();
-	    }
-        }
-        
-        bird.setDisplay(new int[25]);
-    }
-    public static void setDisplay(int[] led, int set, int value) {
-        if (set >= 1 && set <= led.length) {
-            led[set - 1] = value; 
-        }
-    }
-}
+        while (true) {
+            System.out.println("Options:\n1: Start the Robot\n2: Stop the Robot\n3: System Data\n4: Exit");
+            int ops = scanner.nextInt();
+            scanner.nextLine();
+            
+            if (ops == 1) {
+                String direction = "";
+                int distance = 0;
+                int speed = 0;
+                while (true) {
+                    System.out.println("What direction do you want to go? (F/B): ");
+                    direction = scanner.nextLine();
+                    if (direction.length() > 0 && (direction.substring(0, 1).equalsIgnoreCase("F") || direction.substring(0, 1).equalsIgnoreCase("B"))) {
+                        break;
+                    } else {
+                        System.out.println("Invalid direction. Try again.");
+                    }
+                }
+                System.out.println("How far do you want it to go?: ");
+                distance = scanner.nextInt();
+                while (true) {
+                    System.out.println("What speed do you want? (1-100): ");
+                    speed = scanner.nextInt();
+                    if (speed >= 1 && speed <= 100) {
+                        break;
+                    } else {
+                        System.out.println("Invalid speed. Try again.");
+                    }
+                }
 
-/*while(!(up.equals("f"))) {
-System.out.print("Distance to obstacle: " + bird.getDistance());
-bird.setMove("F",999,50);
-if((bird.isShaking()) == true) {
-	bird.pause(1.5);
-	bird.getSound();
-}else {
-	bird.setMove("F", 10, 100);
+                bird.setMove(direction.substring(0, 1), distance, speed);
+            } else if (ops == 2) {
+                bird.stop();
+            } else if (ops == 3) {
+                System.out.println("Distance from object: " + bird.getDistance());
+                System.out.println("Compass: " + bird.getCompass());
+            } else if (ops == 4) {
+                System.out.println("Exiting...");
+                break;
+            } else {
+                System.out.println("Invalid option. Please select from 1 to 4.");
+            }
+        }
+    }
 }
-}*/	
